@@ -1,6 +1,7 @@
 package one.digitalinnovation.cloudparking.service;
 
 
+import one.digitalinnovation.cloudparking.exception.ParkingNotFoundExcption;
 import one.digitalinnovation.cloudparking.model.Parking;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +35,13 @@ public class ParkingService {
     }
 
     public Parking findById(String id) {
+        Parking parking = parkingMap.get(id);
 
-        return parkingMap.get(id);
+        if(parking == null) {
+            throw new ParkingNotFoundExcption(id);
+        }
+
+        return parking;
     }
 
     public Parking create(Parking parkingCreate) {
